@@ -4,8 +4,8 @@ Dies ist ein Tool zum Hochladen von Predigten.
 
 ### Usage
 
-#### Executable
-Es kann die Executable in diesem ordner ausgeführt werden, Sie muss jedoch im ./ verzeichniss sein.
+#### Executable (nicht verfügbar)
+Es kann die Executable in dem dist ordner ausgeführt werden, Sie muss jedoch im ./ verzeichniss sein.
 
 #### python 
 ```
