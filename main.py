@@ -1,12 +1,12 @@
 import sys
 from PyQt6 import QtWidgets as qtw
 
-from src.functions import *
-from src.yt_download_latest_stream import *
+from src.utils import *
+from src.upload.youtube import *
 from src.windows.mainWindow import MainWindow
 
 def test():
-    data = get_youtube_data()
+    data = get_last_livestream_data()
     print(data)
     
 

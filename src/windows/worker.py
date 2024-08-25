@@ -1,14 +1,16 @@
 from PyQt6.QtCore import Qt, pyqtSignal, QObject, QThread
 
-from src.yt_download_latest_stream import get_youtube_data, dowload_youtube
-from src.functions import *
+from src.upload.youtube import get_last_livestream_data, dowload_youtube
+from src.upload.send_file import *
+from src.upload.manipulate_file import *
+from src.utils import *
 
 
 class Worker(QObject):
     finished = pyqtSignal(list)
 
     def run(self):
-        data = get_youtube_data()
+        data = get_last_livestream_data()
         self.finished.emit(data)
 
 
