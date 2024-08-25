@@ -18,9 +18,12 @@ def handle_post():
 @app.route('/get_latest_streams_data', methods=['GET'])
 def handle_get():
     latest = get_last_livestream_data()
+    return jsonify({"data": latest}), 200#
+
+# Youtube data
+@app.route('/get_latest_streams_data', methods=['GET'])
+def handle_get():
+    latest = get_last_livestream_data()
     return jsonify({"data": latest}), 200
 
 
-
-if __name__ == '__main__':
-    app.run(debug=True)

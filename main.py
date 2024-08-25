@@ -5,9 +5,11 @@ from src.utils import *
 from src.upload.youtube import *
 from src.windows.mainWindow import MainWindow
 
+from src import server
+
 def test():
-    data = get_last_livestream_data()
-    print(data)
+    #data = get_last_livestream_data()
+    server.app.run(debug=True)
     
 
 def main():
@@ -21,4 +23,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    test()
+    #main()
