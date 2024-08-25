@@ -3,6 +3,10 @@ from mutagen.mp3 import MP3
 from mutagen import File
 from mutagen.easyid3 import EasyID3
 
+import os
+from src.speech_to_text.speech_to_text import speech_to_text
+from src.speech_to_text.llama import *
+
 
 from src.functions import get_themes_of_predigten
 
@@ -40,7 +44,15 @@ def print_mp3_tags(file_path):
 
 
 def test():
-    print(get_themes_of_predigten())
+    prompt = 'Was ist eine Maus?',
+    pipeline, tokenizer = load_llam()
+    use_llama(pipeline, tokenizer, prompt)
+
+    #audio_file_path = os.path.join('stored', 'test.mp3')
+    #speech_to_text(audio_file_path)
+    
+    
+    
     #print_mp3_tags("stored\predigt-2024-07-14_Treffpunkt_Leben_Karlsruhe.mp3")
 
 

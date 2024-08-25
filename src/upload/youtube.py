@@ -3,7 +3,7 @@ from yt_dlp import YoutubeDL
 from googleapiclient.discovery import build
 import isodate
 
-from src.functions import check_config_file_for_key
+from src.utils import * 
 
 
 api_key = check_config_file_for_key('YOUTUBE_API_KEY')
@@ -12,7 +12,7 @@ if api_key:
 else:
     youtube = None
 
-def get_youtube_data():
+def get_last_livestream_data():
     global youtube 
     if not youtube:
         api_key = check_config_file_for_key('YOUTUBE_API_KEY')

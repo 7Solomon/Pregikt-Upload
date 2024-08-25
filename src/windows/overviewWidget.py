@@ -57,6 +57,8 @@ class OverviewWidget(QWidget):
             dir = os.listdir('stored/')
         
         # Filter and sort files based on their names (assuming the date is part of the file name)
+
+        ### Problem in here, if file with not possible extract_date it returns an error
         filtered_files = sorted(dir, key=extract_date, reverse=True)[:5]
         
 
