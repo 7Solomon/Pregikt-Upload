@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import (QApplication, QMainWindow, QVBoxLayout, QPushButton
 from PyQt6.QtCore import Qt, QThread
 from PyQt6.QtGui import QFont
 
-from src.functions import *
+from src.utils import *
 from src.windows.overviewWidget import OverviewWidget
 from src.windows.worker import *
 from src.windows.detailWidget import DetailWidget

@@ -3,7 +3,7 @@ from PyQt6.QtCore import Qt, QMimeData
 from PyQt6.QtGui import QDragEnterEvent, QDropEvent
 import json
 
-from src.functions import *
+from src.utils import *
 from src.windows.overviewWidget import OverviewWidget
 from src.windows.worker import *
 from src.windows.detailWidget import DetailWidget
