@@ -7,7 +7,7 @@ import io
 from tqdm import tqdm
 
 
-from src.functions import check_config_file_for_key
+from utils import check_config_file_for_key
 
 def speech_to_text(audio_file):
     # get model and Audio

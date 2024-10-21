@@ -8,7 +8,7 @@ from src.speech_to_text.speech_to_text import speech_to_text
 from src.speech_to_text.llama import *
 
 
-from src.functions import get_themes_of_predigten
+from utils import get_themes_of_predigten
 
 def print_audio_tags(file_path):
     try:
