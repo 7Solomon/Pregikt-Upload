@@ -7,7 +7,7 @@ from mutagen.id3 import ID3, TIT2, TALB, TPE1, TCON, TCOP, TYER, TDAT, TRDA, TLE
 from mutagen.mp3 import MP3
 
 
-from src.utils import * 
+from utils import * 
 
 
 def generate_id3_tags(file_path, prediger, predigt_titel, datum, year):
@@ -36,21 +36,21 @@ def generate_id3_tags(file_path, prediger, predigt_titel, datum, year):
     audio['TLEN'] = TLEN(encoding=3, text=str(duration_ms))
 
     # Save the changes
-    audio.save(file_path)  # Explicitly save as ID3v2.3
+    audio.save(writable_path(file_path))  # Explicitly save as ID3v2.3
 
     # Return the updated tags
     return dict(audio.items())
 
 def change_predigt_title(file_path,predigt_titel):
-    audio = ID3(file_path)
+    audio = ID3(writable_path(file_path))
     audio['TIT2'] = TIT2(encoding=3, text=predigt_titel)
-    audio.save(file_path)
+    audio.save(writable_path(file_path))
     return dict(audio.items())
 
 def change_prediger(file_path,prediger):
-    audio = ID3(file_path)
+    audio = ID3(writable_path(file_path))
     audio['TPE1'] = TPE1(encoding=3, text=prediger)
-    audio.save(file_path)
+    audio.save(writable_path(file_path))
     return dict(audio.items())
 
 
@@ -71,10 +71,10 @@ def compress_audio(file_name):
     
     (
         ffmpeg
-        .input(input_file)
+        .input(writable_path(input_file))
         .audio
         .filter('acompressor', threshold=threshold_amplitude, ratio=ratio, attack=attack, release=release)
-        .output(out_path, acodec='libmp3lame', q=0)
+        .output(writable_path(out_path), acodec='libmp3lame', q=0)
         .overwrite_output()
         .run(capture_stdout=True, capture_stderr=True)
     )
@@ -83,7 +83,7 @@ def compress_audio(file_name):
 def rename_file(file_name, datum):
     new_filename = f"file/predigt-{datum}_Treffpunkt_Leben_Karlsruhe.mp3"
     # Falls die Datei bereits existiert
-    if os.path.exists(new_filename):
-        os.remove(new_filename)
-    os.rename(file_name, new_filename)
+    if os.path.exists(writable_path(new_filename)):
+        os.remove(writable_path(new_filename))
+    os.rename(writable_path(file_name), writable_path(new_filename))
     return new_filename

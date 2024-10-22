@@ -3,7 +3,7 @@ from yt_dlp import YoutubeDL
 from googleapiclient.discovery import build
 import isodate
 
-from src.utils import * 
+from utils import * 
 
 
 api_key = check_config_file_for_key('YOUTUBE_API_KEY')
@@ -16,6 +16,7 @@ def get_last_livestream_data():
     global youtube 
     if not youtube:
         api_key = check_config_file_for_key('YOUTUBE_API_KEY')
+        print(api_key)
         youtube = build('youtube', 'v3', developerKey=api_key)
 
     channel_id = check_config_file_for_key('channel_id')
@@ -87,7 +88,7 @@ def dowload_youtube(URL):
 
     download_options = {
         'format': 'bestaudio/best',
-        'outtmpl': 'file/pre_compressed_audio',
+        'outtmpl': writable_path('file/pre_compressed_audio'),
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',

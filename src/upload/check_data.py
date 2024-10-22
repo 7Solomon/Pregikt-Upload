@@ -3,7 +3,7 @@ from pydub import AudioSegment
 import requests
 from bs4 import BeautifulSoup
 
-from src.utils import * 
+from utils import * 
 
 def get_audio_duration(file_path):
     audio = AudioSegment.from_file(file_path)

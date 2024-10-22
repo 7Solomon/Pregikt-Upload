@@ -3,7 +3,7 @@ from PyQt6.QtCore import Qt, pyqtSignal, QObject, QThread
 from src.upload.youtube import get_last_livestream_data, dowload_youtube
 from src.upload.send_file import *
 from src.upload.manipulate_file import *
-from src.utils import *
+from utils import *
 
 
 class Worker(QObject):

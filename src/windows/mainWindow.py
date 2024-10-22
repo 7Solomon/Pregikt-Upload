@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import (QApplication, QMainWindow, QVBoxLayout, QPushButton
 from PyQt6.QtCore import Qt, QThread
 from PyQt6.QtGui import QFont
 
-from src.utils import *
+from utils import *
 from src.windows.overviewWidget import OverviewWidget
 from src.windows.worker import *
 from src.windows.detailWidget import DetailWidget
@@ -33,10 +33,10 @@ class MainWindow(QMainWindow):
         
 
         # Check if structure is correct
-        if not os.path.exists('stored'):
-            os.mkdir('stored')
-        if not os.path.exists('file'):
-            os.mkdir('file')
+        if not os.path.exists(writable_path('stored')):
+            os.mkdir(writable_path('stored'))
+        if not os.path.exists(writable_path('file')):
+            os.mkdir(writable_path('file'))
 
 
 

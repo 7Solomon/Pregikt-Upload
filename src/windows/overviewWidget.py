@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import (QApplication, QMainWindow, QVBoxLayout, QPushButton
                             QProgressBar, QMessageBox)
 from PyQt6.QtCore import Qt, QThread
 
-from src.utils import *
+from utils import *
 from src.upload.send_file import *
 from src.windows.worker import *
 
@@ -51,11 +51,11 @@ class OverviewWidget(QWidget):
         self.create_overview()
 
     def create_overview(self):        
-        if os.path.exists('stored'):
-            dir = os.listdir('stored/')
+        if os.path.exists(writable_path('stored')):
+            dir = os.listdir(writable_path('stored/'))
         else:
-            os.mkdir('stored')
-            dir = os.listdir('stored/')
+            os.mkdir(writable_path('stored'))
+            dir = os.listdir(writable_path('stored/'))
         
         # Filter and sort files based on their names (assuming the date is part of the file name)
 
@@ -104,7 +104,7 @@ class OverviewWidget(QWidget):
             self.debug.setText(e)
 
     def start_file_upload(self, file_name, file_item):
-        path = f'stored/{file_name}'
+        path = writable_path(f'stored/{file_name}')
         worker = UploadWorker(path)
         thread = QThread()
 

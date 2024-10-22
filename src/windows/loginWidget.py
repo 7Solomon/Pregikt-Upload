@@ -3,7 +3,7 @@ from PyQt6.QtCore import Qt, QMimeData
 from PyQt6.QtGui import QDragEnterEvent, QDropEvent
 import json
 
-from src.utils import *
+from utils import *
 from src.windows.overviewWidget import OverviewWidget
 from src.windows.worker import *
 from src.windows.detailWidget import DetailWidget
@@ -50,6 +50,7 @@ class LoginWidget(QWidget):
         urls = event.mimeData().urls()
         if urls:
             file_path = urls[0].toLocalFile()
+            file_path = writable_path(file_path)
             if file_path.lower().endswith(".json"):
                 self.process_file(file_path)
             else:
@@ -57,11 +58,11 @@ class LoginWidget(QWidget):
     
     def process_file(self, file_path):
         try:
-            with open(file_path, 'r') as file:
+            with open(writable_path(file_path), 'r') as file:
                 data = json.load(file)
 
             # Write the contents to config.json
-            with open('config.json', 'w') as config_file:
+            with open(writable_path('config.json'), 'w') as config_file:
                 json.dump(data, config_file, indent=4)
                 
             self.label.setText("Erfolgreich config.json configuriert!")

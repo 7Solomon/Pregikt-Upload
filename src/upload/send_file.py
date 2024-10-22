@@ -5,7 +5,7 @@ from mutagen.mp3 import MP3
 from mutagen.id3 import ID3
 from io import BytesIO
 
-from src.utils import * 
+from utils import * 
 
 def send_file_to_server(path):
     file_name = os.path.basename(path)
@@ -16,14 +16,14 @@ def send_file_to_server(path):
 
 
     session = ftplib.FTP(server,name,password)
-    file = open(path,'rb')              
+    file = open(writable_path(path),'rb')              
     session.storbinary(f'STOR {file_name}', file)     # send the file
     file.close()                                    # close file and FTP
     session.quit()
     #return 'File uploaded to server'
 
 def check_if_file_on_server(path):
-    file_name = os.path.basename(path)
+    file_name = os.path.basename(writable_path(path))
 
     server = check_config_file_for_key('server')
     name = check_config_file_for_key('name')
