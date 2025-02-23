@@ -15,12 +15,10 @@ def test():
     
 
 def main():
-    print("Starting App")
     app = qtw.QApplication(sys.argv)
     window = MainWindow()
     window.show()
     sys.exit(app.exec())
-    
 
 
 

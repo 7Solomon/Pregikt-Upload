@@ -6,3 +6,7 @@ src\__pycache__
 file/
 speech_to_text/deep_model.pbmm
 llama/
+build/
+dist/
+main.spec
+Predigt-Upload.zip

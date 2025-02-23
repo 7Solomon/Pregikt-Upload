@@ -28,7 +28,7 @@ def manage_files(dir_name):
     if dir.__contains__(writable_path('pre_compressed_audio.mp3')):
         os.remove(writable_path('file/pre_compressed_audio.mp3'))
     if dir.__contains__(writable_path('file/compressed_audio.mp3')):
-        os.remove('file/compressed_audio.mp3')
+        os.remove(writable_path('file/compressed_audio.mp3'))
  
     file_name = dir_name.split('/')[1]
     

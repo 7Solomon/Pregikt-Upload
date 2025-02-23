@@ -4,6 +4,7 @@ import ftplib
 from mutagen.mp3 import MP3
 from mutagen.id3 import ID3
 from io import BytesIO
+import requests
 
 from utils import * 
 
@@ -20,7 +21,22 @@ def send_file_to_server(path):
     session.storbinary(f'STOR {file_name}', file)     # send the file
     file.close()                                    # close file and FTP
     session.quit()
+    send_update_request()
     #return 'File uploaded to server'
+
+def send_update_request():
+    ### testPending
+    url = check_config_file_for_key('update_url')
+    
+    if url:
+        response = requests.get(url)
+        # Check if the request was successful
+        if response.status_code == 200:
+            print("Request was successful!")
+            print("Response content:")
+            print(response.text)  # Print the content of the response
+        else:
+            print(f"Failed to retrieve data. Status code: {response.status_code}")
 
 def check_if_file_on_server(path):
     file_name = os.path.basename(writable_path(path))

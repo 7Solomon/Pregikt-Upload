@@ -3,6 +3,8 @@ from yt_dlp import YoutubeDL
 from googleapiclient.discovery import build
 import isodate
 
+import tempfile
+
 from utils import * 
 
 
@@ -12,7 +14,7 @@ if api_key:
 else:
     youtube = None
 
-def get_last_livestream_data():
+def get_last_livestream_data(limit = 20):
     global youtube 
     if not youtube:
         api_key = check_config_file_for_key('YOUTUBE_API_KEY')
@@ -34,7 +36,7 @@ def get_last_livestream_data():
     playlist_response = youtube.playlistItems().list(
         playlistId=uploads_playlist_id,
         part='contentDetails',
-        maxResults=3
+        maxResults=limit      #!!! Hier kann geändert werden wie viele Videos zurückgegeben werden sollen
     ).execute()
 
 
@@ -65,12 +67,15 @@ def get_last_livestream_data():
 
                 title =  livestream_info['snippet']['title']
                 description = livestream_info['snippet']['description']
-                startTime = livestream_info['liveStreamingDetails']['actualStartTime']
+                print(livestream_info['liveStreamingDetails'].keys())
+
+                #startTime = livestream_info['liveStreamingDetails']['actualStartTime']
                 duration = get_video_duration(livestream_info['id'])
                 if duration is None:
                     duration = 'Length not available'
                 URL = f"https://www.youtube.com/watch?v={video_id}"
-                last_livestreams.append({"title": title, "description": description, "startTime": startTime, "URL": URL, 'length':duration})
+                #last_livestreams.append({"title": title, "description": description, "startTime": startTime, "URL": URL, 'length':duration})
+                last_livestreams.append({"title": title, "description": description, "URL": URL, 'length':duration})
 
             else:
                 print("Das Letzte Video ist kein Livestream")
@@ -85,22 +90,40 @@ def dowload_youtube(URL):
     if not youtube:
         api_key = check_config_file_for_key('YOUTUBE_API_KEY')
         youtube = build('youtube', 'v3', developerKey=api_key)
+    
+    temp_file = tempfile.NamedTemporaryFile(delete=False)
+    temp_file_name = f'{temp_file.name}.mp3'
+    temp_file.close()  # Close the file but keep it on disk
 
+    
     download_options = {
         'format': 'bestaudio/best',
-        'outtmpl': writable_path('file/pre_compressed_audio'),
+        'outtmpl': f'{temp_file.name}.%(ext)s',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
             'preferredquality': '192',
         }],
+        
+        'verbose': True, # FOR DEBUGGING
+        'keepvideo': False,
+        'overwrites': True,
+        'ffmpeg_location': None 
     }
 
-    with YoutubeDL(download_options) as ydl:
-        ydl.download([URL])
-    
-    
-    return 'file/pre_compressed_audio'
+    try:
+        with YoutubeDL(download_options) as ydl:
+            print(f"Downloading to: {temp_file_name}")
+            ydl.download([URL])
+            return temp_file_name
+    except Exception as e:
+        print(f"Download error: {str(e)}")
+        # Cleanup any temporary files
+        for ext in ['.mp3', '.webm', '.m4a', '.part']:
+            possible_file = f"{temp_file_name}{ext}"
+            if os.path.exists(possible_file):
+                os.unlink(possible_file)
+        raise
 
 def get_video_duration(video_id):
 

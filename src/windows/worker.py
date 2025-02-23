@@ -11,6 +11,7 @@ class Worker(QObject):
 
     def run(self):
         data = get_last_livestream_data()
+        print(data)
         self.finished.emit(data)
 
 
@@ -44,10 +45,13 @@ class WorkerThread(QThread):
         try:
             # Download file from youtube
             file_url = dowload_youtube(self.item['URL'])
+            print(f'DEBUG: {file_url}')
             self.progress.emit(20)
 
             # Compress File
             file_url = compress_audio(file_url)
+            print(f'DEBUG: {file_url}')
+
             self.progress.emit(40)
 
             # Get Date
@@ -60,8 +64,10 @@ class WorkerThread(QThread):
 
             # Manage files
             file_url = rename_file(file_url, datum_str)
+            print(f'DEBUG: {file_url}')
+
             self.progress.emit(80)
-            manage_files(file_url)
+            #manage_files(file_url)
             self.progress.emit(100)
             self.finished.emit(file_url)
         except Exception as e:
