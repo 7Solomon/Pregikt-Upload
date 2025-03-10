@@ -64,7 +64,6 @@ class WorkerThread(QThread):
 
             # Manage files
             file_url = rename_file(file_url, datum_str)
-            print(f'DEBUG: {file_url}')
 
             self.progress.emit(80)
             #manage_files(file_url)

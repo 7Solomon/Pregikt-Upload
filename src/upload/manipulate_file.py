@@ -90,13 +90,14 @@ def compress_audio(file_name):
 
 def rename_file(temp_file_name, datum):
     """Convert temporary file to permanent"""
-    new_filename = f"file/predigt-{datum}_Treffpunkt_Leben_Karlsruhe.mp3"
-    os.makedirs(os.path.dirname(writable_path(new_filename)), exist_ok=True)
+    new_filename = f"stored/predigt-{datum}_Treffpunkt_Leben_Karlsruhe.mp3"
+    new_writable_path = writable_path(new_filename)
+    os.makedirs(os.path.dirname(new_writable_path), exist_ok=True)
     
     # Copy content from temp file to new permanent file
     with open(temp_file_name, 'rb') as temp_file:
-        with open(writable_path(new_filename), 'wb') as new_file:
+        with open(new_writable_path, 'wb') as new_file:
             new_file.write(temp_file.read())
     # Clean up temp file
     os.unlink(temp_file_name)
-    return new_filename
+    return new_writable_path

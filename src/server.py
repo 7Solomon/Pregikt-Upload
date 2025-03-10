@@ -84,72 +84,69 @@ def handle_get_stored_files(limit):
         
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
-from src.upload.send_file import upload_file_to_server
-from src.upload.manipulate_file import change_predigt_title, change_prediger
 
-@app.route('/send_file/<string:file_name>', methods=['POST'])
-def handle_send_file(file_name):
-    try:
-        file_path = writable_path(f'stored/{file_name}')
-        if not os.path.exists(file_path):
-            return jsonify({"error": "File not found"}), 404
-            
-        success = upload_file_to_server(file_path)
-        if success:
-            return jsonify({"message": "File uploaded successfully"}), 200
-        else:
-            return jsonify({"error": "Upload failed"}), 500
-            
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/send_file/<string:file_name>', methods=['POST'])
-def handle_send_file(file_name):
-    try:
-        file_path = writable_path(f'stored/{file_name}')
-        if not os.path.exists(file_path):
-            return jsonify({"error": "File not found"}), 404
-            
-        success = upload_file_to_server(file_path)
-        if success:
-            return jsonify({"message": "File uploaded successfully"}), 200
-        else:
-            return jsonify({"error": "Upload failed"}), 500
-            
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/change_title/<string:file_name>', methods=['POST'])
-def handle_change_title(file_name):
-    try:
-        data = request.get_json()
-        if 'title' not in data:
-            return jsonify({"error": "Missing title in request"}), 400
-            
-        file_path = writable_path(f'stored/{file_name}')
-        if not os.path.exists(file_path):
-            return jsonify({"error": "File not found"}), 404
-            
-        change_predigt_title(file_path, data['title'])
-        return jsonify({"message": "Title updated successfully"}), 200
-            
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/change_prediger/<string:file_name>', methods=['POST'])
-def handle_change_prediger(file_name):
-    try:
-        data = request.get_json()
-        if 'prediger' not in data:
-            return jsonify({"error": "Missing prediger in request"}), 400
-            
-        file_path = writable_path(f'stored/{file_name}')
-        if not os.path.exists(file_path):
-            return jsonify({"error": "File not found"}), 404
-            
-        change_prediger(file_path, data['prediger'])
-        return jsonify({"message": "Prediger updated successfully"}), 200
-            
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+#@app.route('/send_file/<string:file_name>', methods=['POST'])
+#def handle_send_file(file_name):
+#    try:
+#        file_path = writable_path(f'stored/{file_name}')
+#        if not os.path.exists(file_path):
+#            return jsonify({"error": "File not found"}), 404
+#            
+#        success = upload_file_to_server(file_path)
+#        if success:
+#            return jsonify({"message": "File uploaded successfully"}), 200
+#        else:
+#            return jsonify({"error": "Upload failed"}), 500
+#            
+#    except Exception as e:
+#        return jsonify({"error": str(e)}), 500
+#
+#@app.route('/send_file/<string:file_name>', methods=['POST'])
+#def handle_send_file(file_name):
+#    try:
+#        file_path = writable_path(f'stored/{file_name}')
+#        if not os.path.exists(file_path):
+#            return jsonify({"error": "File not found"}), 404
+#            
+#        success = upload_file_to_server(file_path)
+#        if success:
+#            return jsonify({"message": "File uploaded successfully"}), 200
+#        else:
+#            return jsonify({"error": "Upload failed"}), 500
+#            
+#    except Exception as e:
+#        return jsonify({"error": str(e)}), 500
+#
+#@app.route('/change_title/<string:file_name>', methods=['POST'])
+#def handle_change_title(file_name):
+#    try:
+#        data = request.get_json()
+#        if 'title' not in data:
+#            return jsonify({"error": "Missing title in request"}), 400
+#            
+#        file_path = writable_path(f'stored/{file_name}')
+#        if not os.path.exists(file_path):
+#            return jsonify({"error": "File not found"}), 404
+#            
+#        change_predigt_title(file_path, data['title'])
+#        return jsonify({"message": "Title updated successfully"}), 200
+#            
+#    except Exception as e:
+#        return jsonify({"error": str(e)}), 500
+#
+#@app.route('/change_prediger/<string:file_name>', methods=['POST'])
+#def handle_change_prediger(file_name):
+#    try:
+#        data = request.get_json()
+#        if 'prediger' not in data:
+#            return jsonify({"error": "Missing prediger in request"}), 400
+#            
+#        file_path = writable_path(f'stored/{file_name}')
+#        if not os.path.exists(file_path):
+#            return jsonify({"error": "File not found"}), 404
+#            
+#        change_prediger(file_path, data['prediger'])
+#        return jsonify({"message": "Prediger updated successfully"}), 200
+#            
+#    except Exception as e:
+#        return jsonify({"error": str(e)}), 500
